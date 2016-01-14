@@ -1,1 +1,1 @@
-module.exports = require('./lib/react-ui-tree');
+module.exports = require('./dist/react-ui-tree');
