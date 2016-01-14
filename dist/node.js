@@ -8,20 +8,12 @@ var Node = React.createClass({
   displayName: 'UITreeNode',
 
   renderCollapse: function renderCollapse() {
-    var index = this.props.index;
-
-    if (index.children && index.children.length) {
-      var collapsed = index.node.collapsed;
-
-      return React.createElement('span', {
-        className: cx('collapse', collapsed ? 'caret-right' : 'caret-down'),
-        onMouseDown: function (e) {
-          e.stopPropagation();
-        },
-        onClick: this.handleCollapse });
-    }
-
-    return null;
+    return React.createElement('span', {
+      className: cx('collapse', collapsed ? 'caret-right' : 'caret-down'),
+      onMouseDown: function (e) {
+        e.stopPropagation();
+      },
+      onClick: this.handleCollapse });
   },
 
   renderChildren: function renderChildren() {
