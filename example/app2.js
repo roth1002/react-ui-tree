@@ -3,7 +3,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var Tree = require('../lib/react-ui-tree.js');
 var tree = require('./tree');
-var TreeObj = require('../lib/tree.js');
 var tree2 = require('./tree2');
 
 require('../lib/react-ui-tree.less');
@@ -14,11 +13,48 @@ var App = React.createClass({
   getInitialState() {
     return {
       active: null,
-      tree: tree
+      tree: tree,
+      tree2: tree2
     };
   },
 
   renderNode(node) {
+    // return (
+    //   <Tree
+    //     paddingLeft={20}
+    //     tree={this.state.tree2}
+    //     onChange={this.handleChange}
+    //     isNodeCollapsed={this.isNodeCollapsed}
+    //     renderNode={this.renderNode2}
+    //   />
+    // );
+    console.log(node.module)
+    return (
+      <span className={cx('node', {
+        'is-active': node === this.state.active
+        })} onClick={this.onClickNode.bind(null, node)}>
+        {node.module}
+        <Tree
+          paddingLeft={20}
+          tree={this.state.tree2}
+          onChange={this.handleChange}
+          isNodeCollapsed={this.isNodeCollapsed}
+          renderNode={this.renderNode2}
+        />
+       </span>
+    );
+  },
+
+  renderNode2(node) {
+    // return (
+    //   <Tree
+    //     paddingLeft={20}
+    //     tree={this.state.tree2}
+    //     onChange={this.handleChange}
+    //     isNodeCollapsed={this.isNodeCollapsed}
+    //     renderNode={this.renderNode2}
+    //   />
+    // );
     return (
       <span className={cx('node', {
         'is-active': node === this.state.active
@@ -43,7 +79,6 @@ var App = React.createClass({
             tree={this.state.tree}
             onChange={this.handleChange}
             isNodeCollapsed={this.isNodeCollapsed}
-            onCallApi={this.handleAJAX}
             renderNode={this.renderNode}
           />
         </div>
@@ -69,25 +104,6 @@ var App = React.createClass({
     this.setState({
       tree: tree
     });
-  },
-
-  handleAJAX(nodeId) {
-    var tree = new TreeObj(this.state.tree);
-    tree.isNodeCollapsed = this.isNodeCollapsed;
-    tree.renderNode = this.renderNode;
-    tree.changeNodeCollapsed = this.changeNodeCollapsed;
-    tree.updateNodesPosition();
-    var index = tree.getIndex(nodeId);
-    var node = index.node;
-    if ( node.collapsed ) {
-      node.children = [tree2];
-    }
-    node.collapsed = !node.collapsed;
-    tree.updateNodesPosition();
-    this.setState({
-      tree: tree.obj
-    });
-    // console.log('FUCK', nodeId)
   }
 });
 

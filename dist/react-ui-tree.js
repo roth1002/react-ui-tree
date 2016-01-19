@@ -41,7 +41,6 @@ module.exports = React.createClass({
 
   render: function render() {
     var tree = this.state.tree;
-
     return React.createElement(
       'div',
       { className: 'm-tree' },
@@ -50,7 +49,8 @@ module.exports = React.createClass({
         index: tree.getIndex(1),
         key: 1,
         paddingLeft: this.props.paddingLeft,
-        onCollapse: this.toggleCollapse })
+        onCollapse: this.toggleCollapse
+      })
     );
   },
 
@@ -60,16 +60,6 @@ module.exports = React.createClass({
   },
 
   toggleCollapse: function toggleCollapse(nodeId) {
-    var tree = this.state.tree;
-    var index = tree.getIndex(nodeId);
-    var node = index.node;
-    node.collapsed = !node.collapsed;
-    tree.updateNodesPosition();
-
-    this.setState({
-      tree: tree
-    });
-
-    this.change(tree);
+    this.props.onCallApi(nodeId);
   }
 });
