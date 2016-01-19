@@ -8,6 +8,8 @@ var Node = React.createClass({
   displayName: 'UITreeNode',
 
   renderCollapse: function renderCollapse() {
+    var index = this.props.index;
+    var collapsed = index.node.collapsed;
     return React.createElement('span', {
       className: cx('collapse', collapsed ? 'caret-right' : 'caret-down'),
       onMouseDown: function (e) {
